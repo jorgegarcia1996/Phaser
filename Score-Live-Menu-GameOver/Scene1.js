@@ -1,0 +1,122 @@
+class Scene1 extends Phaser.Scene {
+  constructor() {
+    super("bootGame");
+  }
+
+  preload(){
+    this.load.image("background", "assets/images/background.png");
+
+    this.load.spritesheet("personaje1", "assets/spritesheets/Personaje1.png",{
+      frameWidth: 77,
+      frameHeight: 68
+    });
+    this.load.spritesheet("personaje2", "assets/spritesheets/Personaje2.png",{
+      frameWidth: 83,
+      frameHeight: 70
+    });
+    this.load.spritesheet("personaje3", "assets/spritesheets/Personaje3.png",{
+      frameWidth: 73,
+      frameHeight: 70
+    });
+    this.load.spritesheet("explosion", "assets/spritesheets/explosion.png",{
+      frameWidth: 48,
+      frameHeight: 48
+    });
+
+    this.load.spritesheet("player1", "assets/spritesheets/Car1.png", {
+      frameWidth: 105,
+      frameHeight: 70
+    });
+
+    this.load.spritesheet("player2", "assets/spritesheets/Car2.png", {
+      frameWidth: 105,
+      frameHeight: 70
+    });
+
+    this.load.spritesheet("items", "assets/spritesheets/Items.png", {
+      frameWidth: 32.5,
+      frameHeight: 30
+    });
+
+    this.load.spritesheet("bullet", "assets/spritesheets/Proyectil.png", {
+      frameWidth: 16,
+      frameHeight: 14
+    });
+  }
+
+  create() {
+    this.add.text(20, 20, "Loading game...");
+    this.scene.start("playGame");
+
+    this.anims.create({
+      key: "enemy1_anim",
+      frames: this.anims.generateFrameNumbers("personaje1"),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "enemy2_anim",
+      frames: this.anims.generateFrameNumbers("personaje2"),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "enemy3_anim",
+      frames: this.anims.generateFrameNumbers("personaje3"),
+      frameRate: 8,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "explode",
+      frames: this.anims.generateFrameNumbers("explosion"),
+      frameRate: 20,
+      repeat: 0,
+      hideOnComplete: true
+    });
+
+    this.anims.create({
+      key: "note",
+      frames: this.anims.generateFrameNumbers("items", {
+        start: 0,
+        end: 3
+      }),
+      frameRate: 15,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "heart",
+      frames: this.anims.generateFrameNumbers("items", {
+        start: 4,
+        end: 8
+      }),
+      frameRate: 15,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "player1_anim",
+      frames: this.anims.generateFrameNumbers("player1"),
+      frameRate: 3,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "bullet_anim",
+      frames: this.anims.generateFrameNumbers("bullet"),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "player2_anim",
+      frames: this.anims.generateFrameNumbers("player2"),
+      frameRate: 3,
+      repeat: -1
+    });
+
+  }
+}
