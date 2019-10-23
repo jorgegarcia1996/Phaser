@@ -5,6 +5,8 @@ var gameSettings = {
 }
 
 var config = {
+  top_height:170,
+  bottom_height: 473,
   width: 800,
   height: 591,
   backgroundColor: 0x000000,

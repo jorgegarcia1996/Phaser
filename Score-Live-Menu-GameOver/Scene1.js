@@ -6,15 +6,15 @@ class Scene1 extends Phaser.Scene {
   preload(){
     this.load.image("background", "assets/images/background.png");
 
-    this.load.spritesheet("personaje1", "assets/spritesheets/Personaje1.png",{
+    this.load.spritesheet("enemy1", "assets/spritesheets/Personaje1.png",{
       frameWidth: 77,
       frameHeight: 68
     });
-    this.load.spritesheet("personaje2", "assets/spritesheets/Personaje2.png",{
+    this.load.spritesheet("enemy2", "assets/spritesheets/Personaje2.png",{
       frameWidth: 83,
       frameHeight: 70
     });
-    this.load.spritesheet("personaje3", "assets/spritesheets/Personaje3.png",{
+    this.load.spritesheet("enemy3", "assets/spritesheets/Personaje3.png",{
       frameWidth: 73,
       frameHeight: 70
     });
@@ -50,21 +50,21 @@ class Scene1 extends Phaser.Scene {
 
     this.anims.create({
       key: "enemy1_anim",
-      frames: this.anims.generateFrameNumbers("personaje1"),
+      frames: this.anims.generateFrameNumbers("enemy1"),
       frameRate: 10,
       repeat: -1
     });
 
     this.anims.create({
       key: "enemy2_anim",
-      frames: this.anims.generateFrameNumbers("personaje2"),
+      frames: this.anims.generateFrameNumbers("enemy2"),
       frameRate: 10,
       repeat: -1
     });
 
     this.anims.create({
       key: "enemy3_anim",
-      frames: this.anims.generateFrameNumbers("personaje3"),
+      frames: this.anims.generateFrameNumbers("enemy3"),
       frameRate: 8,
       repeat: -1
     });

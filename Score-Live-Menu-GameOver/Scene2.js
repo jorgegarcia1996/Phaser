@@ -8,9 +8,9 @@ class Scene2 extends Phaser.Scene {
     this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
     this.background.setOrigin(0, 0);
 
-    this.enemy1 = this.add.sprite(config.width, config.height + 50, "enemy1");
-    this.enemy2 = this.add.sprite(config.width, config.height / 2, "enemy2");
-    this.enemy3 = this.add.sprite(config.width, config.height / 2 - 50, "dragon");
+    this.enemy1 = this.physics.add.sprite(config.width, config.height + 50, "enemy1");
+    this.enemy2 = this.physics.add.sprite(config.width, config.height / 2, "enemy2");
+    this.enemy3 = this.physics.add.sprite(config.width, config.height / 2 - 50, "enemy3");
 
     this.enemy1.play("enemy1_anim");
     this.enemy2.play("enemy2_anim");
@@ -86,6 +86,22 @@ class Scene2 extends Phaser.Scene {
       this.shoot(this.player1);
     }
 
+    if (this.player1.y < config.top_height) {
+      this.player1.y = config.top_height;
+    }
+
+    if (this.player1.y > config.bottom_height) {
+      this.player1.y = config.bottom_height;
+    }
+
+    if (this.player2.y < config.top_height) {
+      this.player2.y = config.top_height;
+    }
+
+    if (this.player2.y > config.bottom_height) {
+      this.player2.y = config.bottom_height;
+    }
+
     this.projectiles.getChildren().forEach(child => {
       child.update();
     });
@@ -147,7 +163,7 @@ class Scene2 extends Phaser.Scene {
 
   resetPos(ship){
     ship.x = config.width;
-    var randomY = Phaser.Math.Between(170, 450);
+    var randomY = Phaser.Math.Between(config.top_height, config.bottom_height);
     ship.y = randomY;
   }
 
