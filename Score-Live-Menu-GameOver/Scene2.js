@@ -73,6 +73,7 @@ class Scene2 extends Phaser.Scene {
 
     this.physics.add.overlap(this.players, this.items, this.pickItem, null, this);
     this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
+    this.physics.add.overlap(this.players, this.enemies, this.hurtPlayer, null, this);
 
 
     var graphics = this.add.graphics();
@@ -80,24 +81,18 @@ class Scene2 extends Phaser.Scene {
     graphics.beginPath();
     graphics.moveTo(0, 0);
     graphics.lineTo(config.width, 0);
-    graphics.lineTo(config.width, 80);
-    graphics.lineTo(0, 80);
+    graphics.lineTo(config.width, 30);
+    graphics.lineTo(0, 30);
     graphics.lineTo(0, 0);
     graphics.closePath();
     graphics.fillPath();
 
-    this.scoreP1 = 0;
-    this.scoreP2 = 0;
-    this.livesP1 = 3;
-    this.livesP2 = 3;
+    this.score = 0;
+    this.lives = 3;
 
-    var scoreP1Formated = this.zeroPad(this.scoreP1, 6);
-    var scoreP2Formated = this.zeroPad(this.scoreP1, 6);
-
-    this.scoreLabelP1 = this.add.bitmapText(10, 5, "pixelFont", "P1 -  SCORE " + scoreP1Formated, 36);
-    this.scoreLabelP2 = this.add.bitmapText(10, 50, "pixelFont", "P2 - SCORE " + scoreP2Formated, 36);
-    this.livesLabelP1 = this.add.bitmapText(700, 5, "pixelFont", "LIVES " + this.livesP1, 36);
-    this.livesLabelP2 = this.add.bitmapText(700, 50, "pixelFont", "LIVES " + this.livesP2, 36);
+    var scoreFormated = this.zeroPad(this.score, 6);
+    this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE " + scoreFormated, 36);
+    this.livesLabel = this.add.bitmapText(700, 5, "pixelFont", "LIVES " + this.lives, 36);
 
 
   }
@@ -114,17 +109,23 @@ class Scene2 extends Phaser.Scene {
     powerUp.disableBody(true, true);
   }
 
-  hitEnemy(player, projectile, enemy) {
+  hitEnemy(projectile, enemy) {
     projectile.destroy();
     this.resetPos(enemy);
-    if(player == this.player1) {
-      this.scoreP1 += 15;
-     var scoreP1Formated = this.zeroPad(this.scoreP1 , 6);
-     this.scoreLabelP1.text = "P1 -  SCORE " + scoreP1Formated;
+    this.score += 15;
+    var scoreFormated = this.zeroPad(this.score, 6);
+    this.scoreLabel.text = "SCORE " + scoreFormated;
+  }
+
+  hurtPlayer(player, enemy) {
+    this.resetPos(enemy);
+    player.x = 105;
+    player.y = config.height / 2;
+    if (this.lives <= 0) {
+      //TODO GAMEOVER
     } else {
-      this.scoreP2 += 15;
-     var scoreP2Formated = this.zeroPad(this.scoreP2, 6);
-     this.scoreLabelP2.text = "P2 - SCORE " + scoreP2Formated;
+      this.lives -= 1;
+      this.livesLabel.text = "LIVES " + this.lives;
     }
   }
 
