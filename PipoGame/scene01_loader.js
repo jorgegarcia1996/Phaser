@@ -1,4 +1,4 @@
-class Scene1 extends Phaser.Scene {
+class scene01_loader extends Phaser.Scene {
     constructor() {
         super("bootGame");
     }
@@ -6,6 +6,9 @@ class Scene1 extends Phaser.Scene {
     //Precarga de los recursos
     preload() {
         this.load.image("background", "assets/images/background.png");
+        this.load.image("Pipo", "assets/images/Pipo.png");
+        this.load.image("Pipos", "assets/images/Pipos.png");
+        this.load.image("Logo", "assets/images/Logo.png");
 
         this.load.spritesheet("enemy1", "assets/spritesheets/Personaje1.png", {
             frameWidth: 77,
@@ -122,6 +125,6 @@ class Scene1 extends Phaser.Scene {
             repeat: -1
         });
 
-        this.scene.start("playGame");
+        this.scene.start("mainMenu");
     }
 }
