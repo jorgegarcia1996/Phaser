@@ -10,15 +10,15 @@ class scene01_loader extends Phaser.Scene {
         this.load.image("Pipos", "assets/images/Pipos.png");
         this.load.image("Logo", "assets/images/Logo.png");
 
-        this.load.spritesheet("enemy1", "assets/spritesheets/Personaje1.png", {
+        this.load.spritesheet("enemy1", "assets/spritesheets/Enemy1.png", {
             frameWidth: 77,
             frameHeight: 68
         });
-        this.load.spritesheet("enemy2", "assets/spritesheets/Personaje2.png", {
+        this.load.spritesheet("enemy2", "assets/spritesheets/Enemy2.png", {
             frameWidth: 83,
             frameHeight: 70
         });
-        this.load.spritesheet("enemy3", "assets/spritesheets/Personaje3.png", {
+        this.load.spritesheet("enemy3", "assets/spritesheets/Enemy3.png", {
             frameWidth: 73,
             frameHeight: 70
         });

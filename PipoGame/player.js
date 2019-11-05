@@ -1,5 +1,7 @@
 class Player extends Phaser.GameObjects.Sprite {
 
+    score = 0;
+    lives = 3;
     constructor(scene, x, y, sprite, animation) {
         super(scene, x, y, sprite);
 
@@ -12,15 +14,15 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     movePlayerManager(keys, player) {
-        this.body.velocity.x = 0;
+        this.body.velocity.x = 0; 
         this.body.velocity.y = 0;
 
-        if (keys.left.isDown && player.x > 51) {
+        if (keys.left.isDown && this.x > 51) {
             this.body.velocity.x = -gameSettings.playerSpeed;
-        } else if (keys.right.isDown && player.x < config.width - 51) {
+        } else if (keys.right.isDown && this.x < config.width - 51) {
             this.body.velocity.x = gameSettings.playerSpeed;
         }
-        if (keys.up.isDown && player.y > config.top_limit) {
+        if (keys.up.isDown && this.y > config.top_limit) {
             this.body.velocity.y = -gameSettings.playerSpeed;
         } else if (keys.down.isDown && player.y < config.bottom_limit) {
             this.body.velocity.y = gameSettings.playerSpeed;
@@ -30,14 +32,6 @@ class Player extends Phaser.GameObjects.Sprite {
 
     shoot(scene) {
         new Bullet(scene, this);
-    }
-
-    hurtPlayer(enemy) {
-
-    }
-
-    pickItem(item) {
-
     }
 
     update() {
