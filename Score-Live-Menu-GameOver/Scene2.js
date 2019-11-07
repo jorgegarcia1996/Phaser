@@ -23,12 +23,6 @@ class Scene2 extends Phaser.Scene {
     this.enemy2.play("enemy2_anim");
     this.enemy3.play("enemy3_anim");
 
-    //this.enemy1.setInteractive();
-    //this.enemy2.setInteractive();
-    //this.enemy3.setInteractive();
-
-    //this.input.on('gameobjectdown', this.destroy, this);
-
     this.physics.world.setBoundsCollision();
 
     this.items = this.physics.add.group();

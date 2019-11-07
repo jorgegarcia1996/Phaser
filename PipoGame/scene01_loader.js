@@ -5,11 +5,16 @@ class scene01_loader extends Phaser.Scene {
 
     //Precarga de los recursos
     preload() {
+        //Imagenes
         this.load.image("background", "assets/images/background.png");
         this.load.image("Pipo", "assets/images/Pipo.png");
         this.load.image("Pipos", "assets/images/Pipos.png");
+        this.load.image("Replay", "assets/images/Replay.png");
+        this.load.image("Menu", "assets/images/Menu.png");
         this.load.image("Logo", "assets/images/Logo.png");
+        this.load.image("GameOver", "assets/images/GameOver.png");
 
+        //Sprites
         this.load.spritesheet("enemy1", "assets/spritesheets/Enemy1.png", {
             frameWidth: 77,
             frameHeight: 68
@@ -47,6 +52,20 @@ class scene01_loader extends Phaser.Scene {
             frameHeight: 14
         });
 
+        //Musica y sonidos
+        
+        this.load.audio("audio_poi", "./assets/audio/sounds/poi.mp3");
+        this.load.audio("audio_throw", "./assets/audio/sounds/throw.mp3");
+        this.load.audio("audio_explosion", "./assets/audio/sounds/creeper-explosion.mp3");
+        this.load.audio("audio_1up", "./assets/audio/sounds/1upsound.mp3");
+        
+        this.load.audio("music_menu", "./assets/audio/music/MainMenu.mp3");
+        this.load.audio("music_game", "./assets/audio/music/MainMusic.mp3");
+        this.load.audio("music_hurryUp", "./assets/audio/music/HurryUp.mp3");
+        this.load.audio("music_gameOver", "./assets/audio/music/GameOver.mp3");
+
+
+        //Fuente
         this.load.bitmapFont("pixelFont", "assets/font/font.png", "assets/font/font.xml");
 
     }
