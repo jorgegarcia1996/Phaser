@@ -1,10 +1,11 @@
 class Bullet extends Phaser.GameObjects.Sprite{
+    player;
     constructor(scene, player){
-  
       var x = player.x + 20;
       var y = player.y;
-  
+      
       super(scene, x, y, "bullet");
+      this.player = player;
   
       scene.add.existing(this);
   

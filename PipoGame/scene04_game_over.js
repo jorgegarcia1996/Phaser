@@ -7,12 +7,10 @@ class scene04_game_over extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
         this.background.setOrigin(0, 0);
 
-        this.logo = this.add.tileSprite(config.width/2, 120, 400, 200, "GameOver");
-        this.onePlayerLogo = this.physics.add.sprite(config.width/2, 320, "Replay");
-        this.twoPlayerLogo = this.physics.add.sprite(config.width/2, 450, "Menu");
+        this.logo = this.add.tileSprite(config.width/2, 200, 400, 200, "GameOver");
+        this.menuLogo = this.physics.add.sprite(config.width/2, 400, "Menu");
         
-        this.onePlayerLogo.setInteractive();
-        this.twoPlayerLogo.setInteractive();
+        this.menuLogo.setInteractive();
 
         this.input.on('gameobjectdown', this.startGame, this);
 
@@ -29,7 +27,6 @@ class scene04_game_over extends Phaser.Scene {
             loop: true,
             delay: 0
         }
-
         this.music.play(musicConfig);
 
     }
@@ -40,10 +37,6 @@ class scene04_game_over extends Phaser.Scene {
 
     startGame(pointer, gameObject) {
         this.music.stop();
-        if (gameObject == this.onePlayerLogo) {
-            this.scene.start("1Pgame");
-        } else {
             this.scene.start("mainMenu");
-        }
     }
 }

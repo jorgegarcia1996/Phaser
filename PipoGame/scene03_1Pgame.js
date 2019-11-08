@@ -142,7 +142,7 @@ class scene03_1Pgame extends Phaser.Scene {
         var explosion = new Explosion(this, player.x, player.y);
         this.poiSound.play();
 
-        if (player.lives == 1) {
+        if (player.lives == 2) {
             this.mainMusic.stop();
             this.hurryUpMusic.play(this.hurryUpMusicConfig);
 
@@ -150,7 +150,7 @@ class scene03_1Pgame extends Phaser.Scene {
 
 
 
-        if (player.lives <= 0) {
+        if (player.lives <= 1) {
             this.hurryUpMusic.stop();
             this.scene.start("gameOver");
         } else {
@@ -190,7 +190,7 @@ class scene03_1Pgame extends Phaser.Scene {
         item.destroy();
         this.UpSound.play();
         player.lives++;
-        if (player.lives == 1) {
+        if (player.lives == 2) {
             this.hurryUpMusic.stop();
             this.mainMusic.play(this.mainMusicConfig);
         }

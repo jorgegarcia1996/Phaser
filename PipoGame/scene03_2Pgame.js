@@ -20,6 +20,7 @@ class scene03_2Pgame extends Phaser.Scene {
 
         //Colliders
         this.physics.add.collider(this.items, this.items);
+        this.physics.add.collider(this.players, this.players);
 
 
         //Enemies
@@ -36,7 +37,7 @@ class scene03_2Pgame extends Phaser.Scene {
         //Player 1
         this.player1 = new Player(this, 105, config.height / 2 - 80, "player1", "player1_anim");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
-        this.shootP1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.shootP1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         //Player 2
 
@@ -46,8 +47,8 @@ class scene03_2Pgame extends Phaser.Scene {
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
-          });
-          this.shootP2= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        });
+        this.shootP2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
 
 
@@ -62,15 +63,21 @@ class scene03_2Pgame extends Phaser.Scene {
         graphics.beginPath();
         graphics.moveTo(0, 0);
         graphics.lineTo(config.width, 0);
-        graphics.lineTo(config.width, 30);
-        graphics.lineTo(0, 30);
+        graphics.lineTo(config.width, 65);
+        graphics.lineTo(0, 65);
         graphics.lineTo(0, 0);
         graphics.closePath();
         graphics.fillPath();
 
-        var scoreFormated = this.zeroPad(this.player1.score, 6);
-        this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE " + scoreFormated, 36);
-        this.livesLabel = this.add.bitmapText(650, 5, "pixelFont", "LIVES " + this.player1.lives, 36);
+        //Puntuación y vidas del P1
+        var scoreP1Formated = this.zeroPad(this.player1.score, 6);
+        this.scoreP1Label = this.add.bitmapText(10, 5, "pixelFont", "P1:  SCORE " + scoreP1Formated, 36);
+        this.livesP1Label = this.add.bitmapText(650, 5, "pixelFont", "LIVES " + this.player1.lives, 36);
+
+        //Puntuación y vidas del P2
+        var scoreP2Formated = this.zeroPad(this.player2.score, 6);
+        this.scoreP2Label = this.add.bitmapText(10, 40, "pixelFont", "P2: SCORE " + scoreP2Formated, 36);
+        this.livesP2Label = this.add.bitmapText(650, 40, "pixelFont", "LIVES " + this.player2.lives, 36);
 
         //Sonidos
         this.poiSound = this.sound.add("audio_poi");
@@ -126,6 +133,10 @@ class scene03_2Pgame extends Phaser.Scene {
             this.shootSound.play();
         }
 
+        this.players.getChildren().forEach(child => {
+            child.update();
+        });
+
         //update proyectiles
         this.projectiles.getChildren().forEach(child => {
             child.update();
@@ -146,9 +157,18 @@ class scene03_2Pgame extends Phaser.Scene {
             this.generateItem(enemy.x, enemy.y);
         }
         enemy.resetPosition(true);
-        this.player1.score += 15;
-        var scoreFormated = this.zeroPad(this.player1.score, 6);
-        this.scoreLabel.text = "SCORE " + scoreFormated;
+
+        if (projectile.player == this.player1) {
+            this.player1.score += 15;
+            var scoreP1Formated = this.zeroPad(this.player1.score, 6);
+            this.scoreP1Label.text = "P1:  SCORE " + scoreP1Formated;
+        } else {
+
+            this.player2.score += 15;
+            var scoreP2Formated = this.zeroPad(this.player2.score, 6);
+            this.scoreP2Label.text = "P2:  SCORE " + scoreP2Formated;
+        }
+
 
     }
 
@@ -161,20 +181,21 @@ class scene03_2Pgame extends Phaser.Scene {
         var explosion = new Explosion(this, player.x, player.y);
         this.poiSound.play();
 
-        if (this.player1.lives < 2 && this.player2.lives < 2) {
+        if (player.lives < 3) {
             this.mainMusic.stop();
             this.hurryUpMusic.play(this.hurryUpMusicConfig);
-
         }
 
-
-
-        if (this.player1.lives <= 0 && this.player2.lives <= 0) {
+        if (this.player1.lives < 2 && this.player2.lives < 2) {
             this.hurryUpMusic.stop();
             this.scene.start("gameOver");
         } else {
             player.lives--;
-            this.livesLabel.text = "LIVES " + player.lives;
+            if (player == this.player1) {
+                this.livesP1Label.text = "LIVES " + player.lives;
+            } else {
+                this.livesP2Label.text = "LIVES " + player.lives;
+            }
         }
 
         this.time.addEvent({
@@ -188,32 +209,39 @@ class scene03_2Pgame extends Phaser.Scene {
 
     resetPlayer(player) {
         player.x = -100;
-        player.y = config.height / 2;
+        player.y = Phaser.Math.Between(config.bottom_limit, config.top_limit);
 
-        player.alpha = 0.5;
-
-        var tween = this.tweens.add({
-            targets: player,
-            x: 100,
-            ease: 'Power1',
-            duration: 1500,
-            repeat: 0,
-            onComplete: function () {
-                player.alpha = 1;
-            },
-            callbackScope: this
-        });
+        if (player.lives > 0) {
+            player.alpha = 0.5;
+            
+            var tween = this.tweens.add({
+                targets: player,
+                x: 100,
+                ease: 'Power1',
+                duration: 1500,
+                repeat: 0,
+                onComplete: function () {
+                    player.alpha = 1;
+                },
+                callbackScope: this
+            });
+        }
     }
 
     pickItem(player, item) {
         item.destroy();
         this.UpSound.play();
         player.lives++;
-        if (this.player1.lives > 1 && this.player2.lives > 1) {
+        if (this.player1.lives > 2 && this.player2.lives > 2) {
             this.hurryUpMusic.stop();
             this.mainMusic.play(this.mainMusicConfig);
         }
-        this.livesLabel.text = "LIVES " + player.lives;
+        if (player == this.player1) {
+            this.livesP1Label.text = "LIVES " + player.lives;
+        } else {
+            this.livesP2Label.text = "LIVES " + player.lives;
+        }
+
     }
 
     generateItem(x, y) {

@@ -2,15 +2,16 @@ class Player extends Phaser.GameObjects.Sprite {
 
     score = 0;
     lives = 3;
+    scene;
     constructor(scene, x, y, sprite, animation) {
         super(scene, x, y, sprite);
-
         scene.add.existing(this);
-
-
+        
+        
         this.play(animation);
         scene.physics.world.enableBody(this);
         scene.players.add(this);
+        this.scene = scene;
     }
 
     movePlayerManager(keys, player) {
@@ -35,6 +36,8 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-
+        if (this.lives == 0) {
+            this.body.enable = false;
+        }
     }
 }
