@@ -27,7 +27,7 @@ class scene01_loader extends Phaser.Scene {
             frameWidth: 73,
             frameHeight: 70
         });
-        this.load.spritesheet("explosion", "assets/spritesheets/explosion.png", {
+        this.load.spritesheet("explosion", "assets/spritesheets/Explosion.png", {
             frameWidth: 48,
             frameHeight: 48
         });
@@ -38,7 +38,7 @@ class scene01_loader extends Phaser.Scene {
         });
 
         this.load.spritesheet("player2", "assets/spritesheets/Car2.png", {
-            frameWidth: 105,
+            frameWidth: 102,
             frameHeight: 70
         });
 
@@ -140,7 +140,7 @@ class scene01_loader extends Phaser.Scene {
         this.anims.create({
             key: "player2_anim",
             frames: this.anims.generateFrameNumbers("player2"),
-            frameRate: 3,
+            frameRate: 10,
             repeat: -1
         });
 
